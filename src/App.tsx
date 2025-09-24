@@ -1,13 +1,10 @@
-// import { AlignLeft } from "lucide-react"
-import { Button } from "./components/ui/button"
+import LoginPage from "./modules/login/LoginPage"
 
 function App() {
-  function getData(){
-    alert("Hello");
-  }
   return (
     <>
-      <Button onClick={getData}>Click me</Button>
+      <LoginPage/>
+      <p> Phải dùng key khi sử dụng list rendering để theo dõi từng phần tử trong danh sách khi có sự thay đổi trạng thái hoặc thứ tự của các component </p>
     </>
   )
 }
