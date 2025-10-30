@@ -1,14 +1,23 @@
-import LoginPage from "@/pages/login/ui/LoginPage"
-import DashBoardPage from "./pages/dashboard/DashBoardPage"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LoginPage from "./pages/login/ui/LoginPage";
+import ProtectedRoute from "./shared/lib/ProtectedRoute";
+import DashboardPage from "./pages/dashboard/DashBoardPage";
 
 
-function App() {
+export default function App() {
   return (
-    <>
-      <LoginPage/>
-      <DashBoardPage/>
-    </>
-  )
+    <BrowserRouter basename="/SGroup-Frontend-Expertise-/">
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <DashboardPage />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
+  );
 }
-
-export default App
