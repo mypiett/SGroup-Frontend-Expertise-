@@ -16,12 +16,9 @@ export function LoginField() {
 
     try {
       const response = await api.post("/auth/login", { email, password });
-      // const {refreshToken, accessToken} = response.data;
-      const refreshToken = response.data.refreshToken;
       const accessToken = response.data.accessToken;
-      if (accessToken && refreshToken) {
+      if (accessToken ) {
         localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
         navigate("/dashboard");
       }
     } catch (err: any) {
