@@ -3,29 +3,29 @@ import { Input } from "@/shared/ui/input";
 import { Label } from "@/shared/ui/label";
 import { Button } from "@/shared/ui/button";
 import api from "@/shared/lib/axios.interceptor";
+import { useNavigate } from "react-router-dom";
 
 export function LoginField() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false); 
+  const navigate = useNavigate();
 
-  async function submit(e: React.FormEvent) {
-    e.preventDefault();
+  async function submit() {
     setLoading(true);
 
     try {
       const response = await api.post("/auth/login", { email, password });
-      console.log("Login success:", response.data);
-      const token = response.data.accessToken;
-      if (token) {
-        localStorage.setItem("accessToken", token);
-        alert("Đăng nhập thành công!");
-        window.location.href = "/SGroup-Frontend-Expertise-/dashboard";
+      // const {refreshToken, accessToken} = response.data;
+      const refreshToken = response.data.refreshToken;
+      const accessToken = response.data.accessToken;
+      if (accessToken && refreshToken) {
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+        navigate("/dashboard");
       }
     } catch (err: any) {
-      console.log("Login failed");
       console.error("Login failed:", err.response?.data || err.message);
-      alert("Đăng nhập thất bại, vui lòng kiểm tra lại!");
     } finally {
       setLoading(false);
     }
