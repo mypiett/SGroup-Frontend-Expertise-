@@ -1,23 +1,25 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginPage from "./pages/login/ui/LoginPage";
+import { Suspense, lazy } from "react";
 import ProtectedRoute from "./shared/lib/ProtectedRoute";
-import DashboardPage from "./pages/dashboard/DashBoardPage";
-
+const LoginPage = lazy(() => import("./pages/login/ui/LoginPage"));
+const DashboardPage = lazy(() => import("./pages/dashboard/DashBoardPage"));
 
 export default function App() {
   return (
     <BrowserRouter basename="/SGroup-Frontend-Expertise-/">
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <DashboardPage />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
+      <Suspense fallback={<div>Loading</div>}>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <DashboardPage />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }

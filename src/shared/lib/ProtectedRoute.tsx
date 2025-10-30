@@ -18,9 +18,8 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   useEffect(() => {
     const checkAuth = async () => {
       const accessToken = localStorage.getItem("accessToken");
-      const refreshToken = localStorage.getItem("refreshToken");
 
-      if (!accessToken || !refreshToken) {
+      if (!accessToken) {
         setIsAuth(false);
         return;
       }
@@ -31,16 +30,12 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
       } catch (error: any) {
         if (error.response?.status === 401) {
           try {
-            const response = await api.post("/auth/refreshToken", {
-              refreshToken: refreshToken,
-            });
+            const response = await api.post("/auth/refreshToken");
             const accessToken = response.data.accessToken;
-
             localStorage.setItem("accessToken", accessToken);
             setIsAuth(true); 
           } catch {
             localStorage.removeItem("accessToken");
-            localStorage.removeItem("refreshToken");
             setIsAuth(false);
           }
         } else {
