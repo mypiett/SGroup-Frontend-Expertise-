@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import ProtectedRoute from "./shared/lib/ProtectedRoute";
 const LoginPage = lazy(() => import("./pages/login/ui/LoginPage"));
-const DashboardPage = lazy(() => import("./pages/dashboard/DashBoardPage"));
+const DashboardPage = lazy(() => import("./pages/dashboard/ui/DashBoardPage"));
 
 export default function App() {
   return (
